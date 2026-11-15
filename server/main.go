@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"io/fs"
 	"log/slog"
@@ -41,6 +42,36 @@ func handleWebSocket(rooms *RoomManager) http.HandlerFunc {
 		client := NewClient(conn, rooms)
 		go client.WritePump()
 		client.ReadPump()
+	}
+}
+
+// appVersion returns the short git commit being run. Coolify sets SOURCE_COMMIT in the container;
+// anywhere else (e.g. `go run .`) it is "dev".
+func appVersion() string {
+	commit := strings.TrimSpace(os.Getenv("SOURCE_COMMIT"))
+	if commit == "" {
+		return "dev"
+	}
+
+	if len(commit) > 7 {
+		return commit[:7]
+	}
+
+	return commit
+}
+
+type healthResponse struct {
+	Status  string `json:"status"`
+	Version string `json:"version"`
+}
+
+func handleHealth(version string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Cache-Control", "no-store")
+		if err := json.NewEncoder(w).Encode(healthResponse{Status: "ok", Version: version}); err != nil {
+			slog.Debug("writing health response", "error", err)
+		}
 	}
 }
 
@@ -109,11 +140,10 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/ws", handleWebSocket(rooms))
 
-	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"status":"ok"}`))
-	})
+	version := appVersion()
+	slog.Info("version", "version", version)
+
+	mux.HandleFunc("/health", handleHealth(version))
 
 	if *staticDir != "" {
 		slog.Info("serving static files", "dir", *staticDir)

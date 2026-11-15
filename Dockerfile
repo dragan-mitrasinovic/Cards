@@ -28,12 +28,17 @@ RUN CGO_ENABLED=0 go build -o server .
 # ── Stage 3: Minimal production image ────────────────────────────────────────
 FROM alpine:3.21
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates \
+  && addgroup -S app \
+  && adduser -S -G app -H -s /sbin/nologin app
 
 WORKDIR /app
 
 COPY --from=backend-build /app/server ./server
 COPY --from=frontend-build /app/dist/Cards/browser ./static
+
+# Files stay root-owned and read-only for the app; it only reads them and listens on 8080.
+USER app
 
 EXPOSE 8080
 
