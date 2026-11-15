@@ -1,5 +1,5 @@
 # ── Stage 1: Build Angular frontend ──────────────────────────────────────────
-FROM node:22-alpine AS frontend-build
+FROM node:26.13.0-alpine AS frontend-build
 
 WORKDIR /app
 

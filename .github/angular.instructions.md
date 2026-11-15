@@ -6,7 +6,7 @@ applyTo: '**/*.ts, **/*.html, **/*.css'
 # Angular Coding Standards
 
 ## Components
-- Use standalone components (default in Angular 21, do not set `standalone: true`)
+- Use standalone components (default in Angular 22, do not set `standalone: true`)
 - Use `input()`, `output()`, `viewChild()`, `viewChildren()` functions instead of decorators
 - Set `changeDetection: ChangeDetectionStrategy.OnPush` in all components
 - Keep components small and focused on a single responsibility

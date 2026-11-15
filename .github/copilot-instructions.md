@@ -23,7 +23,7 @@ This is a cooperative 2-player browser card game. Players place cards face-down 
 The tech stack is being defined iteratively. Only the items listed below are confirmed. Everything else is TBD — always ask before introducing anything new.
 
 - **Platform:** Web application (browser-based)
-- **Frontend:** Angular 21 (TypeScript)
+- **Frontend:** Angular 22 (TypeScript)
 - **Backend:** Go with gorilla/websocket (in `/server` directory)
 - **Styling:** Tailwind CSS v4 (utility-first)
 - **SSR/SSG:** Disabled (client-side only)

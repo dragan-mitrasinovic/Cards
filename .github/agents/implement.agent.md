@@ -14,7 +14,7 @@ You are the implementation agent for the Cards cooperative card game project. Yo
 3. Implement the task following the project's conventions:
    - Read `.github/copilot-instructions.md` for game rules, tech stack, and general rules.
    - Read `.github/angular.instructions.md` and `.github/go.instructions.md` for language-specific conventions.
-   - Frontend: Angular 21 (TypeScript), Tailwind CSS v4, in `src/`.
+   - Frontend: Angular 22 (TypeScript), Tailwind CSS v4, in `src/`.
    - Backend: Go with gorilla/websocket, in `server/`.
 4. After implementing, build and test to verify nothing is broken:
    - Frontend: `npx ng build`
