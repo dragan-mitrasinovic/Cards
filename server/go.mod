@@ -1,5 +1,5 @@
 module cards/server
 
-go 1.25.3
+go 1.27.0
 
 require github.com/gorilla/websocket v1.5.3
