@@ -14,7 +14,7 @@ RUN npx ng build --configuration production
 
 
 # ── Stage 2: Build Go backend ────────────────────────────────────────────────
-FROM golang:1.25-alpine AS backend-build
+FROM golang:1.27-alpine AS backend-build
 
 WORKDIR /app
 
