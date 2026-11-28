@@ -50,3 +50,16 @@ updates:
       # Major Node.js upgrades are done by hand.
       - dependency-name: node
         update-types: [version-update:semver-major]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: saturday
+      time: "06:00"
+      timezone: Europe/Belgrade
+    cooldown:
+      default-days: 7
+    groups:
+      actions-minor-and-patch:
+        update-types: [minor, patch]
